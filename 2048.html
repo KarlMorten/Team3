@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048</title>
+    <style>
+        div.outerBoard {
+            border: solid 5px purple;
+            width: 400px;
+            height: 400px;
+        }
+        div.board {
+            display: grid;
+            grid-template-columns: repeat(4,100px);
+            grid-template-rows: repeat(4,100px);
+        }
+        div.square {
+            border: solid 1px gray;
+            font-size: 150%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10%;
+            margin: 1px;
+            background-color: rgb(242, 242, 169);
+        }
+        div.knapper {
+            display: grid;
+            grid-template-columns: repeat(3,30px);
+            grid-template-rows: repeat(3,30px);
+            margin-left: 160px;
+        }
+        div.knapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;    
+        }
+        div.poeng {
+            border: solid 5px purple;
+            width: 400px;
+            height: 100px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 150%;
+        }
+    </style>
+</head>
+<body>
+    <div class="outerBoard">
+        <div class="board">
+            <div class="square" id="r1c1">2</div>
+            <div class="square" id="r1c2"></div>
+            <div class="square" id="r1c3"></div>
+            <div class="square" id="r1c4"></div>
+
+            <div class="square" id="r2c1">2</div>
+            <div class="square" id="r2c2"></div>
+            <div class="square" id="r2c3"></div>
+            <div class="square" id="r2c4"></div>
+
+            <div class="square" id="r3c1"></div>
+            <div class="square" id="r3c2"></div>
+            <div class="square" id="r3c3"></div>
+            <div class="square" id="r3c4"></div>
+
+            <div class="square" id="r4c1"></div>
+            <div class="square" id="r4c2"></div>
+            <div class="square" id="r4c3"></div>
+            <div class="square" id="r4c4"></div>
+        </div>
+    </div>
+    <div class="knapper">
+        <div class="knapp"></div>
+        <div class="knapp"><button onclick="moveUp('r1c1','r1c2','r1c3','r1c4','r2c1','r2c2','r2c3','r2c4','r3c1','r3c2','r3c3','r3c4','r4c1','r4c2','r4c3','r4c4')">▲</button></div>
+        <div class="knapp"></div>
+        <div class="knapp"><button onclick="moveLeft('r1c1','r1c2','r1c3','r1c4','r2c1','r2c2','r2c3','r2c4','r3c1','r3c2','r3c3','r3c4','r4c1','r4c2','r4c3','r4c4')">◀</button></div>
+        <div class="knapp"></div>
+        <div class="knapp"><button onclick="moveRight('r1c1','r1c2','r1c3','r1c4','r2c1','r2c2','r2c3','r2c4','r3c1','r3c2','r3c3','r3c4','r4c1','r4c2','r4c3','r4c4')">▶</button></div>
+        <div class="knapp"></div>
+        <div class="knapp"><button onclick="moveDown('r1c1','r1c2','r1c3','r1c4','r2c1','r2c2','r2c3','r2c4','r3c1','r3c2','r3c3','r3c4','r4c1','r4c2','r4c3','r4c4')">▼</button></div>
+        <div class="knapp"></div>
+    </div>
+    <div class="poeng" id="answer"></div>
+
+    <script>
+        var points = 0
+        document.getElementById('answer').innerHTML=points;
+        // newTile('r1c1','r1c2','r1c3','r1c4','r2c1','r2c2','r2c3','r2c4','r3c1','r3c2','r3c3','r3c4','r4c1','r4c2','r4c3','r4c4');
+        // newTile('r1c1','r1c2','r1c3','r1c4','r2c1','r2c2','r2c3','r2c4','r3c1','r3c2','r3c3','r3c4','r4c1','r4c2','r4c3','r4c4');
+        function move(a,b,c,d) {
+            p=document.getElementById(a).innerHTML
+            q=document.getElementById(b).innerHTML
+            r=document.getElementById(c).innerHTML
+            s=document.getElementById(d).innerHTML            
+            if (p=='' && q!='' && r=='' && s=='') {
+                document.getElementById(a).innerHTML=q
+                document.getElementById(b).innerHTML=''
+            }
+            else if (p=='' && q=='' && r!='' && s=='') {
+                document.getElementById(a).innerHTML=r
+                document.getElementById(c).innerHTML=''
+            }
+            else if (p=='' && q=='' && r=='' && s!='') {
+                document.getElementById(a).innerHTML=s
+                document.getElementById(d).innerHTML=''
+            }
+            else if (p!='' && q!='' && r=='' && s=='') {
+                if (p==q) {
+                    document.getElementById(a).innerHTML=2*p
+                    document.getElementById(b).innerHTML=''
+                    points = points + 2*p
+                }
+            }
+            else if (p!='' && q=='' && r!='' && s=='') {
+                if (p==r) {
+                    document.getElementById(a).innerHTML=2*p
+                    document.getElementById(c).innerHTML=''
+                    points = points + 2*p
+                }
+                else {
+                    document.getElementById(b).innerHTML=r
+                    document.getElementById(c).innerHTML=''
+                }
+            }
+            else if (p!='' && q=='' && r=='' && s!='') {
+                if (p==s) {
+                    document.getElementById(a).innerHTML=2*p
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*p
+                }
+                else {
+                    document.getElementById(b).innerHTML=s
+                    document.getElementById(d).innerHTML=''
+                }
+            }
+            else if (p=='' && q!='' && r!='' && s=='') {
+                if (q==r) {
+                    document.getElementById(a).innerHTML=2*q
+                    document.getElementById(b).innerHTML=''
+                    document.getElementById(c).innerHTML=''
+                    points = points + 2*q
+                }
+                else {
+                    document.getElementById(a).innerHTML=q
+                    document.getElementById(b).innerHTML=r
+                    document.getElementById(c).innerHTML=''
+                }
+            }
+            else if (p=='' && q!='' && r=='' && s!='') {
+                if (q==s) {
+                    document.getElementById(a).innerHTML=2*q
+                    document.getElementById(b).innerHTML=''
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*q
+                }
+                else {
+                    document.getElementById(a).innerHTML=q
+                    document.getElementById(b).innerHTML=s
+                    document.getElementById(d).innerHTML=''
+                }
+            }
+            else if (p=='' && q=='' && r!='' && s!='') {
+                if (r==s) {
+                    document.getElementById(a).innerHTML=2*r
+                    document.getElementById(c).innerHTML=''
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*r
+                }
+                else {
+                    document.getElementById(a).innerHTML=r
+                    document.getElementById(b).innerHTML=s
+                    document.getElementById(c).innerHTML=''
+                    document.getElementById(d).innerHTML=''
+                }
+            }
+            else if (p!='' && q!='' && r!='' && s=='') {
+                if (p==q) {
+                    document.getElementById(a).innerHTML=2*p
+                    document.getElementById(b).innerHTML=r
+                    document.getElementById(c).innerHTML=''
+                    points = points + 2*p
+                }
+                else if (q==r) {
+                    document.getElementById(b).innerHTML=2*q
+                    document.getElementById(c).innerHTML=''
+                    points = points + 2*q
+                }
+            }
+            else if (p!='' && q!='' && r=='' && s!='') {
+                if (p==q) {
+                    document.getElementById(a).innerHTML=2*p
+                    document.getElementById(b).innerHTML=s
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*p
+                }
+                else if (q==s) {
+                    document.getElementById(b).innerHTML=2*q
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*q
+                }
+                else {
+                    document.getElementById(c).innerHTML=s
+                    document.getElementById(d).innerHTML=''
+                }
+            }
+            else if (p!='' && q=='' && r!='' && s!='') {
+                if (p==r) {
+                    document.getElementById(a).innerHTML=2*p
+                    document.getElementById(b).innerHTML=s
+                    document.getElementById(c).innerHTML=''
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*p
+                }
+                else if (r==s) {
+                    document.getElementById(b).innerHTML=2*r
+                    document.getElementById(c).innerHTML=''
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*r
+                }
+                else {
+                    document.getElementById(b).innerHTML=r
+                    document.getElementById(c).innerHTML=s
+                    document.getElementById(d).innerHTML=''
+                }
+            }
+            else if (p=='' && q!='' && r!='' && s!='') {
+                if (q==r) {
+                    document.getElementById(a).innerHTML=2*q
+                    document.getElementById(b).innerHTML=s
+                    document.getElementById(c).innerHTML=''
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*q
+                }
+                else if (r==s) {
+                    document.getElementById(a).innerHTML=q
+                    document.getElementById(b).innerHTML=2*r
+                    document.getElementById(c).innerHTML=''
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*r
+                }
+                else {
+                    document.getElementById(a).innerHTML=q
+                    document.getElementById(b).innerHTML=r
+                    document.getElementById(c).innerHTML=s
+                    document.getElementById(d).innerHTML=''
+                }
+            }
+            else if (p!='' && q!='' && r!='' && s!='') {
+                if (p==q) {
+                    if (r==s) {
+                        document.getElementById(a).innerHTML=2*p
+                        document.getElementById(b).innerHTML=2*r
+                        document.getElementById(c).innerHTML=''
+                        document.getElementById(d).innerHTML=''
+                        points = points + 2*p + 2*r
+                    }
+                    else {
+                        document.getElementById(a).innerHTML=2*p
+                        document.getElementById(b).innerHTML=r
+                        document.getElementById(c).innerHTML=s
+                        document.getElementById(d).innerHTML=''
+                        points = points + 2*p
+                    }                    
+                }
+                else if (q==r) {
+                    document.getElementById(b).innerHTML=2*q
+                    document.getElementById(c).innerHTML=s
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*q
+                }
+                else if (r==s) {
+                    document.getElementById(c).innerHTML=2*r
+                    document.getElementById(d).innerHTML=''
+                    points = points + 2*r
+                }
+            }    
+        }
+        function newTile(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) {
+            let allTiles=[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p]
+            let emptyTiles=new String[0]
+            for (let u=0;u<length.allTiles;u++) {
+                if (document.getElementById(allTiles[u]).innerHTML=='') {
+                    emptyTiles[u]=allTiles[u]
+                }
+            }
+            let v=Math.floor(Math.random() * length.emptyTiles);
+            if (Math.random()<0.1) {
+                let w=4;
+            }
+            else {
+                let w=2;
+            }
+            document.getElementById(emptyTiles[v]).innerHTML=w
+        }        
+        function moveUp(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) {
+            move(a,e,i,m);
+            move(b,f,j,n);
+            move(c,g,k,o);
+            move(d,h,l,p);
+            document.getElementById('answer').innerHTML=points
+            newTile(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p)
+        }
+        function moveDown(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) {
+            move(m,i,e,a);
+            move(n,j,f,b);
+            move(o,k,g,c);
+            move(p,l,h,d);
+            document.getElementById('answer').innerHTML=points
+        }
+        function moveLeft(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) {
+            move(a,b,c,d);
+            move(e,f,g,h);
+            move(i,j,k,l);
+            move(m,n,o,p);
+            document.getElementById('answer').innerHTML=points
+        }
+        function moveRight(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) {
+            move(d,c,b,a);
+            move(h,g,f,e);
+            move(l,k,j,i);
+            move(p,o,n,m);
+            document.getElementById('answer').innerHTML=points
+        }
+    </script>
+    
+</body>
+</html>
